@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
+import { Navigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [redirectToPosts, setRedirectToPosts] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (username === 'admin' && password === 'admin') {
       localStorage.setItem('token', 'Bearer');
       alert('usted a iniciado sesion');
-      // redirigir a la siguiente pantalla
+      setRedirectToPosts(true);
     } else {
       alert('Usuario o contraseña incorrecta');
     }
   };
-
+  if (redirectToPosts) {
+    return <Navigate to="/posts" replace />;
+  }
   return (
     <form className="container mt-7" onSubmit={handleSubmit}>
       <div className="form-group">

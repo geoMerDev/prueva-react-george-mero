@@ -5,7 +5,9 @@ export const ProtectedRoute = ({
   redirectTo = "/",
   children,
 }) => {
-  if (!isAllowed) {
+  const token = localStorage.getItem('token');
+  const isAuthenticated = !!token; // Convertir token en booleano
+  if (!isAuthenticated) {
     return <Navigate to={redirectTo} replace />;
   }
 

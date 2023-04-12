@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import { useState , useEffect} from "react";
 import Login from "./componets/Login";
 import Posts from "./componets/Post";
 import PostsFavorites from "./componets/PostsFavorites";
@@ -8,33 +7,12 @@ import { ProtectedRoute } from "./componets/ProtectedRoute";
 import "./App.css";
 
 function App() {
-  
-  const isAuthenticated = localStorage.getItem("token");
-  const [Authenticated, setAuthenticated] = useState(null);
-
-  const login = () => {
-    const isAuth = isAuthenticated !== null && isAuthenticated !== undefined;
-    setAuthenticated(isAuth);
-  }
-  const logout = () => {
-    localStorage.removeItem("token");
-    setAuthenticated(false);
-    
-  }
-  useEffect(() => {
-    setAuthenticated(isAuthenticated !== null && isAuthenticated !== undefined);
-  }, []);
   return (
     <Router>
       <Navigation />
-      {Authenticated ? (
-        <button onClick={logout}>Logout</button>
-      ) : (
-        <button onClick={login}>Login</button>
-      )}
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route element={<ProtectedRoute isAllowed={Authenticated} />}>
+        <Route element={<ProtectedRoute  />}>
           <Route path="/posts" element={<Posts />} />
           <Route path="/posts/destacados" element={<PostsFavorites />} />
         </Route>
@@ -65,7 +43,6 @@ function Navigation() {
               Posts Destacados
             </Link>
           </li>
-          
         </ul>
       </div>
     </nav>
